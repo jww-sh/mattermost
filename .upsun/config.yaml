@@ -52,9 +52,9 @@ applications:
                 source_path: client_plugins
 services:
     db:
-        type: postgresql:12
+        type: postgresql:16
     searchelastic:
-        type: elasticsearch:7.2
+        type: opensearch:2
 routes:
     "https://www.{default}/":
         type: upstream
