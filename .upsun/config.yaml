@@ -4,10 +4,10 @@ applications:
         hooks:
             build: !include
                 type: string
-                path: build.sh
+                path: ../build.sh
             deploy: !include
                 type: string
-                path: deploy.sh
+                path: ../deploy.sh
         relationships:
             database: "db:postgresql"
             essearch: "searchelastic:elasticsearch"
@@ -56,8 +56,11 @@ services:
     searchelastic:
         type: elasticsearch:7.2
 routes:
-    "https://{default}/":
+    "https://www.{default}/":
         type: upstream
         upstream: "app:http"
         cache:
             enabled: false
+    "https://{default}/":
+        type: redirect
+        to: "https://www.{default}/"

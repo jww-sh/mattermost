@@ -7,7 +7,7 @@ set_config() {
 }
 
 set_local(){
-    if [ "${MM_SERVICESETTINGS_ENABLELOCALMODE}" == "true"]; then
+    if [ "${MM_SERVICESETTINGS_ENABLELOCALMODE}" == "true" ]; then
       if [ ! -d "${PLATFORM_APP_DIR}/.config/local/" ]; then
         mkdir --parents "${PLATFORM_APP_DIR}/.config/local/"
       fi
