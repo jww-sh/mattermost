@@ -8,6 +8,9 @@ applications:
             deploy: !include
                 type: string
                 path: ../deploy.sh
+            post_deploy: !include
+                type: string
+                path: ../postdeploy.sh
         relationships:
             database: "db:postgresql"
             essearch: "searchelastic:opensearch"
