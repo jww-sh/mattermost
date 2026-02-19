@@ -7,14 +7,13 @@ set_config() {
 }
 
 set_local(){
-    if [ "${MM_SERVICESETTINGS_ENABLELOCALMODE}" == "true" ]; then
-      if [ ! -d "${PLATFORM_APP_DIR}/.config/local/" ]; then
-        mkdir --parents "${PLATFORM_APP_DIR}/.config/local/"
-      fi
+    # Always create the local directory for socket file (used by local mode)
+    if [ ! -d ".config/local/" ]; then
+        mkdir -p .config/local/
+    fi
 
-      if [ ! -f "${PLATFORM_APP_DIR}/.config/local/mattermost_local.socket" ]; then
-        touch "${PLATFORM_APP_DIR}/.config/local/mattermost_local.socket"
-      fi
+    if [ ! -f ".config/local/mattermost_local.socket" ]; then
+        touch .config/local/mattermost_local.socket
     fi
 }
 
