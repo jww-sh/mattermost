@@ -10,7 +10,7 @@ applications:
                 path: ../deploy.sh
         relationships:
             database: "db:postgresql"
-            essearch: "searchelastic:elasticsearch"
+            essearch: "searchelastic:opensearch"
         web:
             upstream:
                 socket_family: tcp
