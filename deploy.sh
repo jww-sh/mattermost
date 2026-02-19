@@ -6,6 +6,18 @@ set_config() {
     fi  
 }
 
+set_local(){
+    if [ "${MM_SERVICESETTINGS_ENABLELOCALMODE}" == "true"]; then
+      if [ ! -d "${PLATFORM_APP_DIR}/.config/local/" ]; then
+        mkdir --parents "${PLATFORM_APP_DIR}/.config/local/"
+      fi
+
+      if [ ! -f "${PLATFORM_APP_DIR}/.config/local/mattermost_local.socket" ]; then
+        touch "${PLATFORM_APP_DIR}/.config/local/mattermost_local.socket"
+      fi
+    fi
+}
+
 first_deploy() {
 
     # Demo details - currently blocked by upstream issue (version mismatch - https://github.com/mattermost/mattermost-server/issues/19023).
@@ -28,3 +40,4 @@ first_deploy() {
 }
 
 set_config
+set_local

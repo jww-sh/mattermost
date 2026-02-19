@@ -1,6 +1,6 @@
 name: app
 
-type: 'golang:1.14'
+type: 'golang:1.19'
 
 hooks:
     build: !include

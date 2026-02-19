@@ -13,7 +13,7 @@ Mattermost is an open-source messaging framework written in Go and React.
 
 ## Features
 
-* Go 1.14
+* Go 1.19
 * PostgreSQL 12
 * Elasticsearch 7.2
 
