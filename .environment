@@ -36,7 +36,6 @@ export MM_SERVICESETTINGS_LOCALMODESOCKETLOCATION="/app/.config/local/mattermost
 export MMCTL_LOCAL_SOCKET_PATH="/app/.config/local/mattermost_local.socket"
 # First deploy details.
 export PSH_INITADMIN_USERNAME=admin
-export PSH_INITADMIN_PASSWORD=Admin1234567!
 export PSH_INITADMIN_EMAIL=admin@example.com
 export PSH_FIRSTTEAM_NAME=team-admin
 export PSH_FIRSTTEAM_DISPLAYNAME=team-admin

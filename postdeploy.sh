@@ -15,8 +15,16 @@ wait_for_socket() {
 first_deploy() {
     printf "\n\033[1mInitializing Mattermost on first deploy...\033[0m\n"
     wait_for_socket
-    printf "\n  ✔ \033[1mCreating initial admin user\033[0m ($PSH_INITADMIN_USERNAME/$PSH_INITADMIN_EMAIL/$PSH_INITADMIN_PASSWORD)\n      "
-    ./bin/mmctl user create --local --username $PSH_INITADMIN_USERNAME --email $PSH_INITADMIN_EMAIL --password $PSH_INITADMIN_PASSWORD
+
+    # Generate a random password: 20 alphanumeric chars + guaranteed symbol/digit/case chars
+    local admin_password
+    admin_password="$(openssl rand -base64 32 | tr -dc 'A-Za-z0-9' | head -c 20)!9Aa"
+
+    printf "\n  ✔ \033[1mCreating initial admin user\033[0m ($PSH_INITADMIN_USERNAME/$PSH_INITADMIN_EMAIL)\n      "
+    if ./bin/mmctl user create --local --username "$PSH_INITADMIN_USERNAME" --email "$PSH_INITADMIN_EMAIL" --password "$admin_password"; then
+        printf "%s" "$admin_password" > .config/admin_credentials
+    fi
+
     printf "\n  ✔ \033[1mCreating initial private team\033[0m ($PSH_FIRSTTEAM_NAME/$PSH_FIRSTTEAM_DISPLAYNAME)\n    "
     ./bin/mmctl team create --local --name $PSH_FIRSTTEAM_NAME --display-name $PSH_FIRSTTEAM_DISPLAYNAME --private
     ./bin/mmctl team users add --local $PSH_FIRSTTEAM_NAME $PSH_INITADMIN_USERNAME
@@ -25,7 +33,7 @@ first_deploy() {
     ./bin/mmctl channel users add --local $PSH_FIRSTTEAM_NAME:$PSH_FIRSTCHANNEL_NAME $PSH_INITADMIN_USERNAME
     printf "\n  ✔ \033[1mPosting welcome/warning messages to channel...\033[0m\n    "
     # mmctl post create is not available in local socket mode; use HTTP auth instead
-    ./bin/mmctl auth login "$MM_SERVICESETTINGS_SITEURL" --name deploy-session --username "$PSH_INITADMIN_USERNAME" --password "$PSH_INITADMIN_PASSWORD"
+    ./bin/mmctl auth login "$MM_SERVICESETTINGS_SITEURL" --name deploy-session --username "$PSH_INITADMIN_USERNAME" --password "$admin_password"
     ./bin/mmctl post create $PSH_FIRSTTEAM_NAME:$PSH_FIRSTCHANNEL_NAME --message "$PSH_WELCOME_MESSAGE"
     ./bin/mmctl post create $PSH_FIRSTTEAM_NAME:$PSH_FIRSTCHANNEL_NAME --message "$PSH_WARNING_MESSAGE1"
     ./bin/mmctl post create $PSH_FIRSTTEAM_NAME:$PSH_FIRSTCHANNEL_NAME --message "$PSH_WARNING_MESSAGE2"
