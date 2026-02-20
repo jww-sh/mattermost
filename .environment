@@ -3,9 +3,7 @@ export MM_SERVICESETTINGS_LISTENADDRESS=":$PORT"
 export MM_SERVICESETTINGS_SITEURL=$(echo "$PLATFORM_ROUTES" | base64 --decode | jq -r 'to_entries[] | select(.value.primary) | .key')
 export MM_SERVICESETTINGS_ALLOWCORSFROM=$(echo "$PLATFORM_ROUTES" | base64 --decode | jq -r 'to_entries[] | select(.value.primary) | .key')
 # Customization.
-export MM_TEAMSETTINGS_SITENAME="Mattermost on Platform.sh"
 export MM_TEAMSETTINGS_ENABLECUSTOMBRAND=true
-export MM_TEAMSETTINGS_CUSTOMDESCRIPTIONTEXT="A Platform.sh template project"
 # PostgreSQL.
 export DATABASE_HOST=$(echo $PLATFORM_RELATIONSHIPS | base64 --decode | jq -r ".database[0].host")
 export DATABASE_PORT=$(echo $PLATFORM_RELATIONSHIPS | base64 --decode | jq -r ".database[0].port")
