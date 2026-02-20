@@ -1,7 +1,20 @@
 #!/usr/bin/env bash
 
+wait_for_socket() {
+    local socket=".config/local/mattermost_local.socket"
+    local max_wait=30
+    local waited=0
+    while [ $waited -lt $max_wait ]; do
+        [ -S "$socket" ] && return 0
+        sleep 1
+        waited=$((waited + 1))
+    done
+    echo "Warning: Mattermost socket not ready after ${max_wait}s" >&2
+}
+
 first_deploy() {
     printf "\n\033[1mInitializing Mattermost on first deploy...\033[0m\n"
+    wait_for_socket
     printf "\n  ✔ \033[1mCreating initial admin user\033[0m ($PSH_INITADMIN_USERNAME/$PSH_INITADMIN_EMAIL/$PSH_INITADMIN_PASSWORD)\n      "
     ./bin/mmctl user create --local --username $PSH_INITADMIN_USERNAME --email $PSH_INITADMIN_EMAIL --password $PSH_INITADMIN_PASSWORD
     printf "\n  ✔ \033[1mCreating initial private team\033[0m ($PSH_FIRSTTEAM_NAME/$PSH_FIRSTTEAM_DISPLAYNAME)\n    "

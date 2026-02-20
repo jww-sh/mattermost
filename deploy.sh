@@ -8,12 +8,11 @@ set_config() {
 
 set_local(){
     # Always create the local directory for socket file (used by local mode)
-    if [ ! -d ".config/local/" ]; then
-        mkdir -p .config/local/
-    fi
-
-    if [ ! -f ".config/local/mattermost_local.socket" ]; then
-        touch .config/local/mattermost_local.socket
+    # Do not pre-create the socket file — Mattermost creates it as a proper Unix socket on startup
+    mkdir -p .config/local/
+    # Remove any stale non-socket file that would prevent Mattermost from binding
+    if [ -e ".config/local/mattermost_local.socket" ] && [ ! -S ".config/local/mattermost_local.socket" ]; then
+        rm -f .config/local/mattermost_local.socket
     fi
 }
 
