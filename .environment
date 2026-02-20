@@ -42,5 +42,5 @@ export PSH_FIRSTTEAM_DISPLAYNAME=team-admin
 export PSH_FIRSTCHANNEL_NAME=setup
 export PSH_FIRSTCHANNEL_DISPLAYNAME=Setup
 export PSH_WELCOME_MESSAGE="Congrats @admin! You have successfully deployed your own Mattermost server on Upsun!"
-export PSH_WARNING_MESSAGE1="**WARNING:** A randomly generated password was created for this System Admin account. Retrieve it by running: \`cat /app/.config/admin_credentials\`"
+export PSH_WARNING_MESSAGE1="**WARNING:** A randomly generated password was created for this System Admin account. Retrieve it by running: \`cat /app/.config/admin_credentials\` via SSH" 
 export PSH_WARNING_MESSAGE2="**WARNING:** Once logged in, go to **Account Settings** in the top right of the toolbar and update your credentials immediately."
