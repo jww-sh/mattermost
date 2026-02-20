@@ -33,7 +33,8 @@ first_deploy() {
     ./bin/mmctl channel users add --local $PSH_FIRSTTEAM_NAME:$PSH_FIRSTCHANNEL_NAME $PSH_INITADMIN_USERNAME
     printf "\n  ✔ \033[1mPosting welcome/warning messages to channel...\033[0m\n    "
     # mmctl post create is not available in local socket mode; use HTTP auth instead
-    ./bin/mmctl auth login "$MM_SERVICESETTINGS_SITEURL" --name deploy-session --username "$PSH_INITADMIN_USERNAME" --password "$admin_password"
+    # --password-file is required; reuse the credentials file saved above
+    ./bin/mmctl auth login "$MM_SERVICESETTINGS_SITEURL" --name deploy-session --username "$PSH_INITADMIN_USERNAME" --password-file .config/admin_credentials
     ./bin/mmctl post create $PSH_FIRSTTEAM_NAME:$PSH_FIRSTCHANNEL_NAME --message "$PSH_WELCOME_MESSAGE"
     ./bin/mmctl post create $PSH_FIRSTTEAM_NAME:$PSH_FIRSTCHANNEL_NAME --message "$PSH_WARNING_MESSAGE1"
     ./bin/mmctl post create $PSH_FIRSTTEAM_NAME:$PSH_FIRSTCHANNEL_NAME --message "$PSH_WARNING_MESSAGE2"
