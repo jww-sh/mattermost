@@ -12,8 +12,8 @@ applications:
                 type: string
                 path: ../postdeploy.sh
         relationships:
-            database: "db:postgresql"
-            essearch: "searchelastic:opensearch"
+            database: { service: db, endpoint: postgresql }
+            essearch: { service: searchelastic, endpoint: opensearch }
         web:
             upstream:
                 socket_family: tcp
@@ -32,27 +32,13 @@ applications:
                         ^/robots\.txt$:
                             allow: true
         mounts:
-            '/.config':
-                source: instance
-                source_path: config-hidden
-            'config':
-                source: instance
-                source_path: config-files
-            'logs':
-                source: instance
-                source_path: log-files
-            'data':
-                source: instance
-                source_path: data-files
-            'dist/files':
-                source: instance
-                source_path: dist-files
-            'plugins':
-                source: instance
-                source_path: plugins
-            'client/plugins':
-                source: instance
-                source_path: client_plugins
+            '/.config': { source: instance, source_path: config-hidden }
+            'config': { source: instance, source_path: config-files }
+            'logs': { source: instance, source_path: log-files }
+            'data': { source: instance, source_path: data-files }
+            'dist/files': { source: instance, source_path: dist-files }
+            'plugins': { source: instance, source_path: plugins }
+            'client/plugins': { source: instance, source_path: client_plugins }
 services:
     db:
         type: postgresql:16
