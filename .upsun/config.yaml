@@ -45,11 +45,8 @@ services:
     searchelastic:
         type: opensearch:2
 routes:
-    "https://www.{default}/":
+    "https://{default}/":
         type: upstream
         upstream: "app:http"
         cache:
             enabled: false
-    "https://{default}/":
-        type: redirect
-        to: "https://www.{default}/"
